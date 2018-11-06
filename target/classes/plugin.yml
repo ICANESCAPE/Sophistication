@@ -1,0 +1,8 @@
+name: Sophistication
+version: 1.0-SNAPSHOT
+main: alchemy.sophistication.Sophistication
+depend: [SCT_Core]
+authors: [Alchemy]
+description: a plugin by a genius
+commands:
+  so:

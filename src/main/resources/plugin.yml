@@ -1,0 +1,8 @@
+name: Sophistication
+version: ${project.version}
+main: alchemy.sophistication.Sophistication
+depend: [SCT_Core]
+authors: [Alchemy]
+description: a plugin by a genius
+commands:
+  so:

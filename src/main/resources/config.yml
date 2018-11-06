@@ -1,0 +1,24 @@
+AllowList:
+  - 276
+
+Lore:
+  - "----装备洗练----"
+  - "%Attribute%"
+  - "---------------"
+
+Lottery:
+  1:
+    lore: "&a测试lore#&c测试Lore2#&3测试Lore4"
+    range: "1-10"
+    chance: 90
+    info: false
+    quality: "&c&l远古"
+    #true是护甲/false是武器
+    equip: false
+
+
+message: "&a洗练出了 %quality% 的东西"
+rune: "rune"
+tool: "tool"
+kong: "kongge"
+confirm: "confirm"
