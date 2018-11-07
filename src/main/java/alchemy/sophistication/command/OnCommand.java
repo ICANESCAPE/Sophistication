@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.sct.core.util.ItemStackUtil;
 
 public class OnCommand implements CommandExecutor {
 
@@ -23,10 +24,13 @@ public class OnCommand implements CommandExecutor {
             }
             if(args[0].equalsIgnoreCase("reload")) {
                 Config.reload();
-                sender.sendMessage("cnm重载好了");
+                sender.sendMessage("重载好了");
             }
             if(args[0].equalsIgnoreCase("print")) {
                 Config.print();
+            }
+            if(args[0].equalsIgnoreCase("t")) {
+                player.getInventory().setItemInMainHand(ItemStackUtil.removeLore(player.getInventory().getItemInMainHand(), 0));
             }
         }
         return false;

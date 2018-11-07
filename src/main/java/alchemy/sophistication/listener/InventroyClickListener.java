@@ -32,7 +32,7 @@ public class InventroyClickListener implements Listener {
             if(inventory.getName().contains("装备洗练") || inventory.getName().equals("我也不知道叫啥名字")) {
                 if(e.getCurrentItem().isSimilar(FileTool.getItem(Config.getItem()))) {
                     e.setCancelled(true);
-                } else { Core.info("测试信息"); }
+                } else {  }
             }
 
             if(inventory.getName().equals(BasicUtil.getString("&d&l装备洗练"))) {
@@ -56,31 +56,27 @@ public class InventroyClickListener implements Listener {
 
 
                                 // 首选删除两行
-                                if(item.hasItemMeta() && item.getItemMeta().hasLore()){
+                                if(item.hasItemMeta() && item.getItemMeta().hasLore()) {
 
                                     // 首先判断是否存在
-                                    int startIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(),Config.getList().get(0));
-                                    int endIndex = startIndex + 1;
-                                    if(startIndex == -1){  // 没有进行过洗练
+                                    int startIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(), BasicUtil.getString(Config.getList().get(0)));
+                                    int endIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(), BasicUtil.getString(Config.getList().get(2)));
+                                    if (startIndex == -1) {  // 没有进行过洗练
                                         // 把Config的两行添加
-                                        ItemStackUtil.addLore(item,Config.getList().get(0));
-                                        ItemStackUtil.addLore(item,Config.getList().get(2));
-                                        startIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(),Config.getList().get(0));
+                                        item = ItemStackUtil.addLore(item, BasicUtil.getString(Config.getList().get(0)));
+                                        item = ItemStackUtil.addLore(item, BasicUtil.getString(Config.getList().get(2)));
+                                        startIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(), Config.getList().get(0));
                                     }
 
-                                    // 获取到最后一行
-                                    endIndex = ItemStackUtil.getLoreIndex(item.getItemMeta().getLore(),Config.getList().get(2));
-
-                                    ItemMeta itemMeta = item.getItemMeta();
-                                 //   List<String> loreList = itemMeta.getLore();
+                                    player.sendMessage(BasicUtil.getString("&aendIndex" + endIndex));
 
                                     // 删除startIndex 到 endIndex 之间的lore
-                                    if(endIndex - startIndex == 1){
+                                    if (endIndex - startIndex == 1) {
                                         // DO NOTHING
-                                    }else{
-                                        for(int i = startIndex + 1; i < endIndex; i++){
-                                            ItemStackUtil.removeLore(item, i);
-                                           // loreList.remove(i);
+                                    } else {
+                                        for (int i = startIndex + 1; i < endIndex; i++) {
+                                            player.sendMessage("测试删除时候的i" + i);
+                                            item = ItemStackUtil.replaceLore(item, ItemStackUtil.getLore(item, i), BasicUtil.getString(Config.getList().get(1)));
                                         }
                                     }
 
@@ -90,32 +86,26 @@ public class InventroyClickListener implements Listener {
                                         String lore = data.getLore().split("#")[i] + BasicUtil.getRandom(
                                                 Integer.parseInt(data.getRange().split("-")[1]),
                                                 Integer.parseInt(data.getRange().split("-")[0]));
-                                        ItemStackUtil.setLore(item, startIndex + 1, lore);
+                                        inventory.setItem(11, ItemStackUtil.replaceLore(item, ItemStackUtil.getLore(item, startIndex), BasicUtil.getString(lore)));
                                         startIndex ++;
                                     }
                                 }else{
                                     // 把Config的两行添加
-                                    ItemStackUtil.addLore(item, Config.getList().get(0));
-                                    ItemStackUtil.addLore(item, Config.getList().get(2));
+                                    item = ItemStackUtil.addLore(item, Config.getList().get(0));
+                                    item = ItemStackUtil.addLore(item, Config.getList().get(2));
                                     int startIndex = 1;
-                                    Core.info("获取到的Lore信息: " + data.getLore());
                                   //  List<String> list = item.getItemMeta().getLore();
                                     // 在startIndex 到 endIndex 之间把洗练得到的lore添加
                                     for(int i = 0; i < data.getLore().split("#").length; i ++) {
                                         String lore = data.getLore().split("#")[i] + BasicUtil.getRandom(
                                                 Integer.parseInt(data.getRange().split("-")[1]),
                                                 Integer.parseInt(data.getRange().split("-")[0]));
-                                        Core.info("添加Lore: " + lore);
-                                        ItemStackUtil.setLore(item, startIndex, lore);
-                                        //list.add(startIndex,lore);
+                                        inventory.setItem(11, ItemStackUtil.replaceLore(item, ItemStackUtil.getLore(item, startIndex), BasicUtil.getString(lore)));
                                         startIndex ++;
                                     }
-                                    //ItemMeta itemMeta = item.getItemMeta();
-                                    //itemMeta.setLore(list);
-                                  //  item.setItemMeta(itemMeta);
                                 }
 
-                                inventory.setItem(11,item);
+                                inventory.setItem(11, item);
                                 rune.setAmount(rune.getAmount() - 1);
                                 inventory.setItem(15, rune);
                                 if(data.isInfo()) {
