@@ -2,12 +2,13 @@ package alchemy.sophistication;
 
 import alchemy.sophistication.command.OnCommand;
 import alchemy.sophistication.file.Config;
-import alchemy.sophistication.listener.InventroyClickListener;
 import alchemy.sophistication.listener.InventroyCloseListener;
+import alchemy.sophistication.listener.onClick;
 import alchemy.sophistication.util.BasicUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@SuppressWarnings("ALL")
 public final class Sophistication extends JavaPlugin {
 
     private static Sophistication instance;
@@ -18,7 +19,7 @@ public final class Sophistication extends JavaPlugin {
         saveDefaultConfig();
         Config.reload();
         Bukkit.getPluginCommand("so").setExecutor(new OnCommand());
-        Bukkit.getPluginManager().registerEvents(new InventroyClickListener(), this);
+        Bukkit.getPluginManager().registerEvents(new onClick(), this);
         Bukkit.getPluginManager().registerEvents(new InventroyCloseListener(), this);
     }
 
